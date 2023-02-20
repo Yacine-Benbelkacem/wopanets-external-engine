@@ -1,4 +1,4 @@
-
+from Node import *
 class Station(Node):
     def __init__(self):
         self.network = None
