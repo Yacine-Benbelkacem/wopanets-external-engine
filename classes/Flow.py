@@ -7,16 +7,13 @@ class Flow(object):
         self.__name = name
         self.__payload = payload
         self.__jitter = 0.
-        self.source = source
-        self.targets = []
         self.__deadline = 0.
         self.__period = period
         
-        if (network != None):
-            self.network = network
-            #self.network.flows.append(self)
-        else:
-            self.network=None
+        self.source = source
+        self.targets = []
+        self.network = network
+
         
     # Start of user code -> properties/constructors for Flow class
 	
