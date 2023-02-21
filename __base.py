@@ -53,25 +53,31 @@ def parseEdges(root,network):
         print(frm)
         to =  [s for s in (network.stations + network.switches) if s.name()==sw.get('to')][0]
         
-        from_port=sw.get('fromPort')
-        to_port=sw.get('toPort')
+        from_port=Port(device=frm,number=int(sw.get('fromPort')))
+        
+        to_port=Port(device=to,number=int(sw.get('toPort')))
         
         lk = Link(name=sw.get('name'),
                                      frm=frm,
                                      to=to,
-                                     from_port=int(from_port),
-                                     to_port=int(to_port),
+                                     from_port=from_port,
+                                     to_port=to_port,
                                      capacity=float(sw.get('transmission-capacity')),
                                      network=network)
         
+        from_port.link(lk)
+        to_port.link(lk)
+        
         if frm.is_switch():
-            frm.ports.append( Port(switch=frm, number= from_port) )
+            frm.ports.append(from_port)
             frm.links.append(lk)
         else:
-            frm.link = lk
+            frm.port(from_port)
+            frm.link(lk)
+            
             
         if to.is_switch():
-            to.ports.append( Port(switch=to, number= to_port) )
+            to.ports.append( to_port )
             to.links.append(lk)
         else:
             to.link = lk
