@@ -33,17 +33,19 @@ class Link(Node):
     def compute_usage(self):
         #  compute_usage function body
         for f in self.network.flows:
-            if (self.__frm in f.paths) and (self.__to in f.paths):
-                if (f.paths.index(self.__frm) < f.paths.index(self.__to) ): 
-                    self.__direct_usage += f.payload()/f.period()
-                else:
-                    self.__reverse_usage += f.payload()/f.period()
+            for t in f.targets:
+                if (self.__frm in t.path) and (self.__to in t.path):
+                    if (t.path.index(self.__frm) < t.path.index(self.__to) ): 
+                        self.__direct_usage += (f.payload()+self.network.overhead())*8.0/f.period()
+                    else:
+                        self.__reverse_usage += (f.payload()+self.network.overhead())*8.0/f.period()
+                    break
         
         # End of user code	
     def compute_load(self):
         #  compute_load function body
-        self.__direct_load=0
-        self.__reverse_load=0
+        self.__direct_load= self.__direct_usage/self.capacity()
+        self.__reverse_load= self.__reverse_usage/self.capacity()
         # End of user code	
     def frm(self,*args):
         # Start of user code protected zone for period function body
