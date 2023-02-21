@@ -27,36 +27,50 @@ from __imports__ import *
     Method to parse stations
         root : the xml main root
 """
-def parseStations(root):
+def parseStations(root,network):
     for station in root.findall('station'):
-        nodes.append (Station(station.get('name')))
+        network.stations.append (   Station(name=station.get('name'),network=network) )
 
 """ parseSwitches
     Method to parse switches
         root : the xml main root
 """
-def parseSwitches(root):
+def parseSwitches(root,network):
     for sw in root.findall('switch'):
-        nodes.append (Switch(sw.get('name'),float(sw.get('tech-latency'))*1e-6))
+        network.switches.append (   Switch( name=sw.get('name'),
+                                            latency=float(sw.get('tech-latency'))*1e-6,
+                                            network=network),
+                                            )
 
 """ parseEdges
     Method to parse edges
         root : the xml main root
 """
-def parseEdges(root):
+def parseEdges(root,network):
     for sw in root.findall('link'):
-        edges.append (Edge(sw.get('name'),sw.get('from'),sw.get('to')))
+        network.links.append (  Link(name=sw.get('name'),
+                                     frm=sw.get('from'),
+                                     to=sw.get('to'),
+                                     network=network))
 
 """ parseFlows
     Method to parse flows
         root : the xml main root
 """
-def parseFlows(root):
+def parseFlows(root,network):
     for sw in root.findall('flow'):
-        flow = Flow (sw.get('name'),sw.get('source'),float(sw.get('max-payload')),67,float(sw.get('period'))*1e-3)
-        flows.append (flow)
+        flow = Flow (name=sw.get('name'),
+                     source=sw.get('source'),
+                     payload=float(sw.get('max-payload')),
+                     overhead=67,
+                     period=float(sw.get('period'))*1e-3,
+                     network=network)
+        
+        network.flows.append (flow)
         for tg in sw.findall('target'):
-            target = Target(flow,tg.get('name'))
+            target = Target( name=tg.get('name'),
+                             flow=flow)
+            
             flow.targets.append(target)
             target.path.append(flow.source)
             for pt in tg.findall('path'):
@@ -66,40 +80,38 @@ def parseFlows(root):
     Method to parse the whole network
         xmlFile : the path to the xml file
 """
-def parseNetwork(xmlFile):
+def parseNetwork(xmlFile,network):
     if os.path.isfile(xmlFile):
         tree = ET.parse(xmlFile)
         root = tree.getroot()
-        parseStations(root)
-        parseSwitches(root)
-        parseEdges(root)
-        parseFlows(root)
+        parseStations(root,network)
+        parseSwitches(root,network)
+        parseEdges(root,network)
+        parseFlows(root,network)
     else:
         print("File not found: "+xmlFile)
 
 """ traceNetwork
     Method to trace the network to the console
 """
-def traceNetwork():
+def traceNetwork(network):
     print("Stations:")
-    for node in nodes:
-        if not node.isSwitch():
-            print ("\t" + node.name)
+    for node in network.stations:
+        print ("\t" + node.name())
             
     print("\nSwitches:")
-    for node in nodes:
-        if node.isSwitch():
-            print ("\t" + node.name)
+    for node in network.switches:
+        print ("\t" + node.name())
             
     print("\nEdges:")
-    for edge in edges:
-        print ("\t" + edge.name + ": " + edge.frm + "=>" + edge.to)
+    for edge in network.links:
+        print ("\t" + edge.name() + ": " + edge.frm() + "=>" + edge.to())
     
     print("\nFlows:")
-    for flow in flows:
-        print ("\t" + flow.name + ": " + flow.source + " (L=" + str(flow.payload) +", p=" + str(flow.period) + ")")
+    for flow in network.flows:
+        print ("\t" + flow.name() + ": " + flow.source + " (L=" + str(flow.payload()) +", p=" + str(flow.period()) + ")")
         for target in flow.targets:
-            print ("\t\tTarget=" + target.to)
+            print ("\t\tTarget=" + target.name())
             for node in target.path:
                 print ("\t\t\t" + node)
 
@@ -107,7 +119,7 @@ def traceNetwork():
     Method to create a fake result file ; only delays are generated (random value between 40 and 80)
         xmlFile : the path to the xml (input) file
 """
-def createFakeResultsFile (xmlFile):
+def createFakeResultsFile (xmlFile,network):
     posDot = xmlFile.rfind('.')
     if not (posDot == -1):
         resFile = xmlFile[0:posDot]+'_res.xml'
@@ -117,10 +129,11 @@ def createFakeResultsFile (xmlFile):
     res.write('<?xml version="1.0" encoding="UTF-8"?>\n')
     res.write('<results>\n')
     res.write('\t<delays>\n')
-    for flow in flows:
-        res.write('\t\t<flow name="' + flow.name + '">\n');
+    for flow in network.flows:
+        print(flow.name())
+        res.write('\t\t<flow name="' + flow.name() + '">\n');
         for target in flow.targets:
-            res.write('\t\t\t<target name="' + target.to + '" value="'+str(random.randint(400, 800))+'" />\n');
+            res.write('\t\t\t<target name="' + target.name() + '" value="'+str(random.randint(400, 800))+'" />\n');
         res.write('\t\t</flow>\n')
     res.write('\t</delays>\n')
     res.write('</results>\n')
@@ -140,7 +153,7 @@ def file2output (file):
 """ Global data """
 ################################################################@
 
-network = Network()
+afdx_network = Network()
 
 ################################################################@
 """ Main program """
@@ -151,8 +164,8 @@ if len(sys.argv)>=2:
 else:
     xmlFile="./ES2E_M.xml"
     
-parseNetwork(xmlFile)
-#traceNetwork()
-createFakeResultsFile(xmlFile)
+parseNetwork(xmlFile,afdx_network)
+traceNetwork(afdx_network)
+#createFakeResultsFile(xmlFile,afdx_network)
 
 
