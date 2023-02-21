@@ -59,9 +59,9 @@ def parseEdges(root,network):
         lk = Link(name=sw.get('name'),
                                      frm=frm,
                                      to=to,
-                                     from_port=from_port,
-                                     to_port=to_port,
-                                     capacity=sw.get('transmission-capacity'),
+                                     from_port=int(from_port),
+                                     to_port=int(to_port),
+                                     capacity=float(sw.get('transmission-capacity')),
                                      network=network)
         
         if frm.is_switch():
@@ -117,6 +117,15 @@ def parseNetwork(xmlFile,network):
     if os.path.isfile(xmlFile):
         tree = ET.parse(xmlFile)
         root = tree.getroot()
+        
+        for sw in root.findall('network'):
+            network.overhead(float(sw.get("overhead")))
+            network.name(sw.get("name"))
+            network.technology(sw.get("technology"))
+            network.capacity(float(sw.get("transmission-capacity")))
+            network.shortest_path_policy(sw.get("shortest-path-policy"))
+        
+        
         parseStations(root,network)
         parseSwitches(root,network)
         parseEdges(root,network)
@@ -199,6 +208,13 @@ else:
     
 parseNetwork(xmlFile,afdx_network)
 traceNetwork(afdx_network)
+
+afdx_network.compute_links_usage()
+afdx_network.compute_links_load()
+
+
+
+
 #createFakeResultsFile(xmlFile,afdx_network)
 
 
