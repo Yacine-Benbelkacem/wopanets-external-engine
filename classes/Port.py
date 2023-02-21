@@ -1,10 +1,12 @@
 
 class Port(object):
-    def __init__(self,switch=None,number=0):
-        self.switch = switch
+    def __init__(self,number=0,device=None,link=None):
+        self.__device = device
+        self.__link = link
         self.__backlog = 0
         self.__number = number
         self.__delay = 0.
+
     
     
     
@@ -42,4 +44,16 @@ class Port(object):
         else:
             return self.__delay
 
-
+    def link(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__link=args[0]
+        else:
+            return self.__link
+        
+    def device(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__device=args[0]
+        else:
+            return self.__device
