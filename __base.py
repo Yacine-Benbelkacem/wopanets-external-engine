@@ -56,18 +56,27 @@ def parseEdges(root,network):
         from_port=sw.get('fromPort')
         to_port=sw.get('toPort')
         
-        if frm.is_switch():
-            frm.ports.append( Port(switch=frm, number= from_port) )
-        if to.is_switch():
-            to.ports.append( Port(switch=to, number= to_port) )
-
-        network.links.append (  Link(name=sw.get('name'),
+        lk = Link(name=sw.get('name'),
                                      frm=frm,
                                      to=to,
                                      from_port=from_port,
                                      to_port=to_port,
                                      capacity=sw.get('transmission-capacity'),
-                                     network=network))
+                                     network=network)
+        
+        if frm.is_switch():
+            frm.ports.append( Port(switch=frm, number= from_port) )
+            frm.links.append(lk)
+        else:
+            frm.link = lk
+            
+        if to.is_switch():
+            to.ports.append( Port(switch=to, number= to_port) )
+            to.links.append(lk)
+        else:
+            to.link = lk
+        
+        network.links.append ( lk )
 
 """ parseFlows
     Method to parse flows
@@ -98,6 +107,7 @@ def parseFlows(root,network):
                 target.path.append(path_node[0])
         
         network.flows.append (flow)
+        source.flows.append(flow)
 
 """ parseNetwork
     Method to parse the whole network
