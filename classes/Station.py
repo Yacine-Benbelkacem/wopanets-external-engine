@@ -7,17 +7,11 @@ class Station(Node):
                  capacity=10,
                  network=None):
         
-        super().__init__(name,kind,service_policy,capacity)
+        super().__init__(name,kind,service_policy,capacity,network)
         
         self.__is_switch=False
-        
-        if (network != None):
-            self.network = network
-            #self.network.stations.append(self)
-        else:
-            self.network=None
-        
-        self.link = None
+        self.__port=None
+        self.__link = None
         self.flows = []
 
     def is_switch(self,*args):
@@ -26,3 +20,17 @@ class Station(Node):
             self.__is_switch=args[0]
         else:
             return self.__is_switch
+    
+    def port(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__port=args[0]
+        else:
+            return self.__port
+    
+    def link(self,*args):
+            # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__link=args[0]
+        else:
+            return self.__link

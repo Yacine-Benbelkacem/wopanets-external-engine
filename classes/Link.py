@@ -12,7 +12,7 @@ class Link(Node):
                  to_port=0,
                  network=None):
         
-        super().__init__(name,kind,service_policy,capacity)
+        super().__init__(name,kind,service_policy,capacity,network)
         
         self.__reverse_usage = 0.
         self.__direct_usage = 0.
@@ -23,9 +23,6 @@ class Link(Node):
         self.__reverse_load = 0.
         self.__direct_load = 0.
 
-        
-        self.network = network
-        #self.network.links.append(self)
         
     # Start of user code -> properties/constructors for Link class
 

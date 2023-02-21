@@ -12,22 +12,16 @@ class Switch(Node):
                  buffer_size=0,
                  network=None):
         
-        super().__init__(name,kind,service_policy,capacity)
+        super().__init__(name,kind,service_policy,capacity,network)
         
         self.__is_switch=True
         self.__latency = latency
         self.__backlog = 0
-        self.ports = []
         self.__switching_technique = ""
         self.__memory_percent = 0.
-        self.links = []
         self.__buffer_size = buffer_size
-        
-        if (network != None):
-            self.network = network
-            #self.network.switches.append(self)
-        else:
-            self.network=None
+        self.links = []
+        self.ports = []
         
     # Start of user code -> properties/constructors for Switch class
 
