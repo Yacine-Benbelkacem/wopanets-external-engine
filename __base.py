@@ -48,9 +48,25 @@ def parseSwitches(root,network):
 """
 def parseEdges(root,network):
     for sw in root.findall('link'):
+        
+        frm = [s for s in (network.stations + network.switches) if s.name()==sw.get('from')][0]
+        print(frm)
+        to =  [s for s in (network.stations + network.switches) if s.name()==sw.get('to')][0]
+        
+        from_port=sw.get('fromPort')
+        to_port=sw.get('toPort')
+        
+        if frm.is_switch():
+            frm.ports.append( Port(switch=frm, number= from_port) )
+        if to.is_switch():
+            to.ports.append( Port(switch=to, number= to_port) )
+
         network.links.append (  Link(name=sw.get('name'),
-                                     frm=sw.get('from'),
-                                     to=sw.get('to'),
+                                     frm=frm,
+                                     to=to,
+                                     from_port=from_port,
+                                     to_port=to_port,
+                                     capacity=sw.get('transmission-capacity'),
                                      network=network))
 
 """ parseFlows
@@ -59,22 +75,29 @@ def parseEdges(root,network):
 """
 def parseFlows(root,network):
     for sw in root.findall('flow'):
+        
+        source = [s for s in (network.stations) if s.name()==sw.get('source')][0]
+        
         flow = Flow (name=sw.get('name'),
-                     source=sw.get('source'),
+                     source=source,
                      payload=float(sw.get('max-payload')),
                      overhead=67,
                      period=float(sw.get('period'))*1e-3,
                      network=network)
         
-        network.flows.append (flow)
         for tg in sw.findall('target'):
+            target_object = [s for s in (network.stations) if s.name()==tg.get('name')][0]
             target = Target( name=tg.get('name'),
+                             target=target_object,
                              flow=flow)
             
             flow.targets.append(target)
             target.path.append(flow.source)
             for pt in tg.findall('path'):
-                target.path.append(pt.get('node'))
+                path_node=[s for s in (network.stations + network.switches) if s.name()==pt.get('node')]
+                target.path.append(path_node[0])
+        
+        network.flows.append (flow)
 
 """ parseNetwork
     Method to parse the whole network
@@ -105,15 +128,15 @@ def traceNetwork(network):
             
     print("\nEdges:")
     for edge in network.links:
-        print ("\t" + edge.name() + ": " + edge.frm() + "=>" + edge.to())
+        print ("\t" + edge.name() + ": " + edge.frm().name() + "=>" + edge.to().name())
     
     print("\nFlows:")
     for flow in network.flows:
-        print ("\t" + flow.name() + ": " + flow.source + " (L=" + str(flow.payload()) +", p=" + str(flow.period()) + ")")
+        print ("\t" + flow.name() + ": " + flow.source.name() + " (L=" + str(flow.payload()) +", p=" + str(flow.period()) + ")")
         for target in flow.targets:
-            print ("\t\tTarget=" + target.name())
+            print ("\t\tTarget=" + target.target().name())
             for node in target.path:
-                print ("\t\t\t" + node)
+                print ("\t\t\t" + node.name())
 
 """ createFakeResultsFile
     Method to create a fake result file ; only delays are generated (random value between 40 and 80)
@@ -165,7 +188,7 @@ else:
     xmlFile="./ES2E_M.xml"
     
 parseNetwork(xmlFile,afdx_network)
-#traceNetwork(afdx_network)
-createFakeResultsFile(xmlFile,afdx_network)
+traceNetwork(afdx_network)
+#createFakeResultsFile(xmlFile,afdx_network)
 
 
