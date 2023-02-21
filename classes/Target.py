@@ -1,8 +1,9 @@
 
 class Target(object):
-    def __init__(self,name,flow):
+    def __init__(self,name,flow,target):
         self.path = []
         self.__name = name
+        self.__target=target
         self.flow = flow
         self.__mode = ""
         
@@ -22,6 +23,13 @@ class Target(object):
             self.__mode=args[0]
         else:
             return self.__mode
+        
+    def target(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__target=args[0]
+        else:
+            return self.__target
     # Start of user code -> methods for Target class
 
     # End of user code
