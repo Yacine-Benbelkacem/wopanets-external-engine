@@ -19,7 +19,9 @@ class Port(object):
         
     def compute_delay(self):
         # Start of user code protected zone for compute_delay function body
-        self.__delay=0
+        if not(self.__device.is_switch()):
+            for f in self.__device.flows:
+                self.__delay += (f.payload() + f.overhead())*8/self.__device.capacity()
         # End of user code	
         
     def number(self,*args):
