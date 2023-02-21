@@ -1,4 +1,6 @@
 
+from Node import *
+
 class Switch(Node):
     def __init__(self):
         self.__latency = 0.

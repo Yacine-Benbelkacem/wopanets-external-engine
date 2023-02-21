@@ -19,67 +19,7 @@ import os.path
 import sys
 import random
 
-################################################################@
-""" Local classes """
-################################################################@
-
-""" Node
-    The Node class is used to handle any node if the network
-    It's an abstract class
-"""
-class Node:
-    def __init__(self, name):
-        self.name = name
-
-""" Station
-    The Station class is used to handle stations
-"""
-class Station(Node):
-    def __init__(self, name):
-        self.name = name
-    def isSwitch(self):
-        return False
-
-""" Switch
-    The Switch class is used to handle switches
-"""
-class Switch(Node):
-    def __init__(self, name, latency):
-        self.name = name
-        self.latency = latency
-    def isSwitch(self):
-        return True
-
-""" Edge
-    The Edge class is used to handle edges
-"""
-class Edge:
-    def __init__(self, name, frm,to):
-        self.name = name
-        self.frm = frm
-        self.to = to
-
-""" Target
-    The Target class is used to handle targets
-"""
-class Target:
-    def __init__(self, flow, to):
-        self.flow = flow
-        self.to = to
-        self.path = []
-
-""" Flow
-    The Flow class is used to handle flows
-"""
-class Flow:
-    def __init__(self, name, source, payload, overhead, period):
-        self.name = name
-        self.source = source
-        self.payload = payload
-        self.overhead = overhead
-        self.period = period
-        self.targets = []
-
+from __init__ import *
 ################################################################@
 """ Local methods """
 ################################################################@
@@ -199,9 +139,8 @@ def file2output (file):
 ################################################################@
 """ Global data """
 ################################################################@
-nodes = [] # the nodes
-edges = [] # the edges
-flows = [] # the flows
+
+network = Network()
 
 ################################################################@
 """ Main program """

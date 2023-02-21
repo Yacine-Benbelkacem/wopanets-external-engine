@@ -1,11 +1,20 @@
 
+from Node import *
+
 class Link(Node):
-    def __init__(self):
+    def __init__(self,
+                 name="",
+                 kind="",
+                 service_policy="",
+                 capacity=10):
+        
+        super().__init__(name,kind,service_policy,capacity)
+        
         self.__reverse_usage = 0.
         self.__direct_usage = 0.
         self.__from_port = 0
         self.__to_port = 0
-        self.__from = ""
+        self.__frm = ""
         self.__to = ""
         self.network = None
         self.__reverse_load = 0.
@@ -24,15 +33,15 @@ class Link(Node):
         # Start of user code protected zone for compute_load function body
         raise NotImplementedError
         # End of user code	
-    def from(self):
+    def frm(self):
         # Start of user code protected zone for from function body
         return ""
         # End of user code	
-    def from(self, from):
+    def frm(self, frm):
         # Start of user code protected zone for from function body
         raise NotImplementedError
         # End of user code	
-    def to(self, from):
+    def to(self, to):
         # Start of user code protected zone for to function body
         raise NotImplementedError
         # End of user code	
@@ -44,7 +53,7 @@ class Link(Node):
         # Start of user code protected zone for from_port function body
         return 0
         # End of user code	
-    def from_port(self, from):
+    def from_port(self, frm):
         # Start of user code protected zone for from_port function body
         raise NotImplementedError
         # End of user code	

@@ -1,47 +1,42 @@
-
 class Node(object):
-    def __init__(self):
-        self.__kind = ""
-        self.__service_policy = ""
-        self.__name = ""
-        self.__capacity = 0.
+    def __init__(self,name="",kind="",service_policy="",capacity=10):
+        self.__name = name
+        self.__kind = kind
+        self.__service_policy = service_policy
+        self.__capacity = capacity
         
-    # Start of user code -> properties/constructors for Node class
+    
 
-    # End of user code
+    
+    
+    #----------------
+    # Getters/setters
+    #----------------
     def name(self):
-        # Start of user code protected zone for name function body
-        return ""
-        # End of user code	
+        return self.__name
+        	
     def name(self, name):
-        # Start of user code protected zone for name function body
-        raise NotImplementedError
-        # End of user code	
+        self.__name=name
+        	
     def kind(self):
-        # Start of user code protected zone for kind function body
-        return ""
-        # End of user code	
-    def kind(self, name):
-        # Start of user code protected zone for kind function body
-        raise NotImplementedError
-        # End of user code	
-    def capacity(self):
-        # Start of user code protected zone for capacity function body
-        return 0.
-        # End of user code	
-    def capacity(self, name):
-        # Start of user code protected zone for capacity function body
-        raise NotImplementedError
-        # End of user code	
-    def service_policy(self):
-        # Start of user code protected zone for service_policy function body
-        return ""
-        # End of user code	
-    def service_policy(self, name):
-        # Start of user code protected zone for service_policy function body
-        raise NotImplementedError
-        # End of user code	
-    # Start of user code -> methods for Node class
+        return self.__kind
 
-    # End of user code
+    def kind(self, kind):        
+        self.__kind=kind
+        	
+    def capacity(self):
+        return self.__capacity
+        	
+    def capacity(self, capacity):
+        self.__capacity=capacity
+        	
+    def service_policy(self):
+        return self.__service_policy
+        	
+    def service_policy(self, service_policy):
+        self.__service_policy=service_policy
+        	
+
+
+    
 
