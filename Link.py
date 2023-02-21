@@ -26,59 +26,59 @@ class Link(Node):
 
     # End of user code
     def compute_usage(self):
-        # Start of user code protected zone for compute_usage function body
+        #  compute_usage function body
         raise NotImplementedError
         # End of user code	
     def compute_load(self):
-        # Start of user code protected zone for compute_load function body
+        #  compute_load function body
         raise NotImplementedError
         # End of user code	
     def frm(self):
-        # Start of user code protected zone for from function body
+        #  from function body
         return ""
         # End of user code	
     def frm(self, frm):
-        # Start of user code protected zone for from function body
+        #  from function body
         raise NotImplementedError
         # End of user code	
     def to(self, to):
-        # Start of user code protected zone for to function body
+        #  to function body
         raise NotImplementedError
         # End of user code	
     def to(self):
-        # Start of user code protected zone for to function body
+        #  to function body
         return ""
         # End of user code	
     def from_port(self):
-        # Start of user code protected zone for from_port function body
+        #  from_port function body
         return 0
         # End of user code	
     def from_port(self, frm):
-        # Start of user code protected zone for from_port function body
+        #  from_port function body
         raise NotImplementedError
         # End of user code	
     def to_port(self):
-        # Start of user code protected zone for to_port function body
+        #  to_port function body
         return 0
         # End of user code	
     def to_port(self, from):
-        # Start of user code protected zone for to_port function body
+        #  to_port function body
         raise NotImplementedError
         # End of user code	
     def direct_load(self):
-        # Start of user code protected zone for direct_load function body
+        #  direct_load function body
         return 0.
         # End of user code	
     def reverse_load(self):
-        # Start of user code protected zone for reverse_load function body
+        #  reverse_load function body
         return 0.
         # End of user code	
     def direct_usage(self):
-        # Start of user code protected zone for direct_usage function body
+        #  direct_usage function body
         return 0.
         # End of user code	
     def reverse_usage(self):
-        # Start of user code protected zone for reverse_usage function body
+        #  reverse_usage function body
         return 0.
         # End of user code	
     # Start of user code -> methods for Link class
