@@ -8,20 +8,21 @@ class Link(Node):
                  capacity=10,
                  frm="",
                  to="",
+                 from_port=0,
+                 to_port=0,
                  network=None):
         
         super().__init__(name,kind,service_policy,capacity)
         
         self.__reverse_usage = 0.
         self.__direct_usage = 0.
-        self.__from_port = 0
-        self.__to_port = 0
+        self.__from_port = from_port
+        self.__to_port = to_port
         self.__frm = frm
         self.__to = to
         self.__reverse_load = 0.
         self.__direct_load = 0.
-        self.switches = []
-        self.stations = []
+
         
         self.network = network
         #self.network.links.append(self)
