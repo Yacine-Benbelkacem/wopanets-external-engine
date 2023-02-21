@@ -1,10 +1,10 @@
 class Node(object):
-    def __init__(self,name="",kind="",service_policy="",capacity=10):
+    def __init__(self,name="",kind="",service_policy="",capacity=10,network=None):
         self.__name = name
         self.__kind = kind
         self.__service_policy = service_policy
         self.__capacity = capacity
-        
+        self.network = network    
     
 
     
