@@ -14,6 +14,7 @@ class Switch(Node):
         
         super().__init__(name,kind,service_policy,capacity)
         
+        self.__is_switch=True
         self.__latency = latency
         self.__backlog = 0
         self.ports = []
@@ -52,6 +53,13 @@ class Switch(Node):
             self.__backlog=args[0]
         else:
             return self.__backlog
+        
+    def is_switch(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__is_switch=args[0]
+        else:
+            return self.__is_switch
         # End of user code	
     # Start of user code -> methods for Switch class
 
