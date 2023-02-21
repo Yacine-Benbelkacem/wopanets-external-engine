@@ -32,8 +32,12 @@ class Link(Node):
     # End of user code
     def compute_usage(self):
         #  compute_usage function body
-        self.__direct_usage =0
-        self.__reverse_usage =0
+        for f in self.network.flows:
+            if (self.__frm in f.paths) and (self.__to in f.paths):
+                if (f.paths.index(self.__frm) < f.paths.index(self.__to) ): 
+                    self.__direct_usage += f.payload()/f.period()
+                else:
+                    self.__reverse_usage += f.payload()/f.period()
         
         # End of user code	
     def compute_load(self):
