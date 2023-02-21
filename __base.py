@@ -19,7 +19,7 @@ import os.path
 import sys
 import random
 
-from __init__ import *
+from __imports__ import *
 ################################################################@
 """ Local methods """
 ################################################################@
