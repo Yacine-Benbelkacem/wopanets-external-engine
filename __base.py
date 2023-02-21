@@ -165,7 +165,7 @@ else:
     xmlFile="./ES2E_M.xml"
     
 parseNetwork(xmlFile,afdx_network)
-traceNetwork(afdx_network)
-#createFakeResultsFile(xmlFile,afdx_network)
+#traceNetwork(afdx_network)
+createFakeResultsFile(xmlFile,afdx_network)
 
 
