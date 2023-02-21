@@ -1,11 +1,12 @@
 
 class Port(object):
-    def __init__(self,number=0,device=None,link=None):
+    def __init__(self,number=0,device=None,link=None,sense=None):
         self.__device = device
         self.__link = link
         self.__backlog = 0
         self.__number = number
         self.__delay = 0.
+        self.__sense=sense
 
     
     
