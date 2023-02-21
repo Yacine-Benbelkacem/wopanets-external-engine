@@ -14,47 +14,47 @@ class Network(object):
     # Start of user code -> properties/constructors for Network class
 
     # End of user code
-    def name(self, name):
-        # Start of user code protected zone for name function body
-        raise NotImplementedError
-        # End of user code	
-    def name(self):
-        # Start of user code protected zone for name function body
-        return ""
-        # End of user code	
-    def overhead(self, name):
-        # Start of user code protected zone for overhead function body
-        raise NotImplementedError
-        # End of user code	
-    def overhead(self):
-        # Start of user code protected zone for overhead function body
-        return 0
-        # End of user code	
-    def shortest_path_policy(self, name):
-        # Start of user code protected zone for shortest_path_policy function body
-        raise NotImplementedError
-        # End of user code	
-    def shortest_path_policy(self):
-        # Start of user code protected zone for shortest_path_policy function body
-        return ""
-        # End of user code	
-    def technology(self):
-        # Start of user code protected zone for technology function body
-        return ""
-        # End of user code	
-    def technology(self, name):
-        # Start of user code protected zone for technology function body
-        raise NotImplementedError
-        # End of user code	
-    def capacity(self):
-        # Start of user code protected zone for capacity function body
-        return 0.
-        # End of user code	
-    def capacity(self, name):
-        # Start of user code protected zone for capacity function body
-        raise NotImplementedError
-        # End of user code	
-    # Start of user code -> methods for Network class
+    def name(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__name=args[0]
+        else:
+            return self.__name
+        
 
-    # End of user code
+    def overhead(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__overhead=args[0]
+        else:
+            return self.__overhead
+        
+    def shortest_path_policy(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__shortest_path_policy=args[0]
+        else:
+            return self.__shortest_path_policy
 
+    def technology(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__technology=args[0]
+        else:
+            return self.__technology
+        	
+    def capacity(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__capacity=args[0]
+        else:
+            return self.__capacity
+
+
+    def compute_links_usage(self):
+        for l in self.links:
+            l.compute_usage()
+            
+    def compute_links_load(self):
+        for l in self.links:
+            l.compute_load()
