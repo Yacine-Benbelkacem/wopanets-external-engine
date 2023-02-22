@@ -7,7 +7,7 @@ class Switch(Node):
                  kind='switch',
                  service_policy="",
                  capacity=10,
-                 
+                 switching_technique="cut_through",
                  latency=0,
                  buffer_size=0,
                  network=None):
@@ -15,13 +15,14 @@ class Switch(Node):
         super().__init__(name,kind,service_policy,capacity,network)
         
         self.__is_switch=True
-        self.__latency = latency
+        self.__latency = latency #technological latency
         self.__backlog = 0
-        self.__switching_technique = ""
+        self.__switching_technique = switching_technique
         self.__memory_percent = 0.
         self.__buffer_size = buffer_size
         self.links = []
         self.ports = []
+        self.flows = []
         
         self.__service_curve = None
         
