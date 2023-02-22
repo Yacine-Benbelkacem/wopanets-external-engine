@@ -12,6 +12,7 @@ class Station(Node):
         self.__is_switch=False
         self.__port=None
         self.__link = None
+        self.__service_cruve=None
         self.flows = []
 
     def is_switch(self,*args):
@@ -34,3 +35,10 @@ class Station(Node):
             self.__link=args[0]
         else:
             return self.__link
+
+    def service_curve(self,*args):
+            # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__service_curve=args[0]
+        else:
+            return self.__service_curve
