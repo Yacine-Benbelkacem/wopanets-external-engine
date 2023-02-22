@@ -50,7 +50,6 @@ def parseEdges(root,network):
     for sw in root.findall('link'):
         
         frm = [s for s in (network.stations + network.switches) if s.name()==sw.get('from')][0]
-        print(frm)
         to =  [s for s in (network.stations + network.switches) if s.name()==sw.get('to')][0]
         
         from_port=Port(device=frm,number=int(sw.get('fromPort')))
