@@ -23,6 +23,8 @@ class Switch(Node):
         self.links = []
         self.ports = []
         
+        self.__service_curve = None
+        
     # Start of user code -> properties/constructors for Switch class
 
     # End of user code
@@ -54,8 +56,10 @@ class Switch(Node):
             self.__is_switch=args[0]
         else:
             return self.__is_switch
-        # End of user code	
-    # Start of user code -> methods for Switch class
-
-    # End of user code
-
+        
+    def service_curve(self,*args):
+            # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__service_curve=args[0]
+        else:
+            return self.__service_curve
