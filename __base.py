@@ -108,8 +108,10 @@ def parseFlows(root,network):
             flow.targets.append(target)
             target.path.append(flow.source)
             for pt in tg.findall('path'):
-                path_node=[s for s in (network.stations + network.switches) if s.name()==pt.get('node')]
-                target.path.append(path_node[0])
+                path_node=[s for s in (network.stations + network.switches) if s.name()==pt.get('node')][0]
+                target.path.append(path_node)
+                if path_node.is_switch() and not(flow in path_node.flows) :
+                    path_node.flows.append(flow)
         
         network.flows.append (flow)
         source.flows.append(flow)
