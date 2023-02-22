@@ -1,18 +1,23 @@
 
 class Flow(object):
-    def __init__(self,name,source,payload,overhead,period,network):
+    def __init__(self,name,source,payload,overhead,period,network,jitter=0,deadline=0):
         self.__priority = ""
         self.__eed = 0.
         self.__overhead = overhead
         self.__name = name
         self.__payload = payload
-        self.__jitter = 0.
-        self.__deadline = 0.
+        self.__jitter = jitter
+        self.__deadline = deadline
         self.__period = period
+        
+        self.__rate = (payload+overhead)*8/period #bps
+        self.__burst = 2*payload - self.__rate*(period - jitter/1000.0)/1000.0 # bits
+        
         
         self.source = source
         self.targets = []
         self.network = network
+        
 
         
     # Start of user code -> properties/constructors for Flow class
@@ -70,6 +75,29 @@ class Flow(object):
             self.__overhead=args[0]
         else:
             return self.__overhead
+
+    def rate(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__rate=args[0]
+        else:
+            return self.__rate
+
+    def burst(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__burst=args[0]
+        else:
+            return self.__burst
+
+    def eed(self,*args):
+        # Start of user code protected zone for period function body
+        if len(args) > 0:
+            self.__eed=args[0]
+        else:
+            return self.__eed
+
+
         # End of user code	
     # Start of user code -> methods for Flow class
 
