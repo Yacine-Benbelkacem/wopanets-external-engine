@@ -64,7 +64,8 @@ class Port(object):
                             prev_port = self.previous_port(tg,f)                
                             prev_port.compute_departure_curve()
                             
-                            arrival += AffineCurve(f.burst(), f.rate()).applyDelay(prev_port.delay()) 
+                            arrival +=  AffineCurve(f.burst(), f.rate()).applyDelay(prev_port.delay()) 
+                            break 
                                 
                                 
         
@@ -114,8 +115,9 @@ class Port(object):
         
     def is_from_port(self,tg):
             neighbour = self.neighbour_device()
-            if (neighbour in tg.path) and (tg.path.index(self.__device) <  tg.path.index(  neighbour  )) :    
-                return True
+            if (neighbour in tg.path and self.__device in tg.path):
+                if (tg.path.index(self.__device) <  tg.path.index(  neighbour  )) :    
+                    return True
             else:
                 return False
             
