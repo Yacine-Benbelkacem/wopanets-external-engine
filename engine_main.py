@@ -225,10 +225,10 @@ afdx_network.compute_links_load()
 
 afdx_network.compute_curves()
 
-print(afdx_network.stations[0].port().arrival_curve().b())
-print(afdx_network.stations[0].port().arrival_curve().r())
+#print(afdx_network.stations[0].port().arrival_curve().b())
+#print(afdx_network.stations[0].port().arrival_curve().r())
 
-print(afdx_network.stations[2].port().delay())
+#print(afdx_network.stations[2].port().delay())
 #print(afdx_network.stations[1].port().delay())
 #print(afdx_network.stations[1].capacity())
 
