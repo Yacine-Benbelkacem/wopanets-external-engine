@@ -45,6 +45,8 @@ The input units shall be as follow :
 
 ## Demo/Results
 
+These results are obtained on the afdx.xml file (in the input folder)
+
 Among of the reasons of the differences between the current engine and the WoPANets native engine is the fact that in the current engine the values of delays and backlogs are not ceiled.
 
 ### Delays
