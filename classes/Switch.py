@@ -6,10 +6,10 @@ class Switch(Node):
                  name="",
                  kind='switch',
                  service_policy="",
-                 capacity=10,
+                 capacity=100000000,
                  switching_technique="cut_through",
                  latency=0,
-                 buffer_size=0,
+                 buffer_size=65536,
                  network=None):
         
         super().__init__(name,kind,service_policy,capacity,network)
@@ -19,7 +19,7 @@ class Switch(Node):
         self.__backlog = 0
         self.__switching_technique = switching_technique
         self.__memory_percent = 0.
-        self.__buffer_size = buffer_size
+        self.__buffer_size = buffer_size*8
         self.links = []
         self.ports = []
         self.flows = []
@@ -31,11 +31,12 @@ class Switch(Node):
     # End of user code
     def compute_total_backlog(self):
         # Start of user code protected zone for compute_total_backlog function body
-        self.__backlog = 0
+        for p in self.ports:
+            self.__backlog += p.backlog() 
         # End of user code	
     def compute_memory_percent(self):
         # Start of user code protected zone for compute_memory_percent function body
-        self.__memory_percent = 0
+        self.__memory_percent = self.__backlog/self.__buffer_size
         # End of user code	
     def latency(self,*args):
         # Start of user code protected zone for period function body
@@ -68,3 +69,6 @@ class Switch(Node):
     def compute_curves(self):
         for prt in self.ports:
             prt.compute_departure_curve()
+        
+        self.compute_total_backlog()
+        self.compute_memory_percent()
