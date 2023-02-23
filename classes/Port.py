@@ -28,7 +28,9 @@ class Port(object):
         #         self.__delay += (f.payload() + f.overhead())*8/self.__device.capacity()
         
         # # theorem 1 calculate delay     
+        
         self.__delay = self.__arrival_curve.b()/self.__device.capacity()
+       
         # End of user code	
         
     
@@ -55,19 +57,28 @@ class Port(object):
             
             
             else: #(if it is a switch)
-                for f in self.__device.flows:
-                    for tg in f.targets:
-                        if self.is_from_port(f): #the port is a dispatcher of the flow 
+                for f in self.__device.flows: # we chack all the flows passing through the switch
+                    for tg in f.targets: 
+                        if self.is_from_port(tg): #if the port is a dispatcher of the flow 
                             
-                            previous_node_index = tg.path.index(self.__device)-1 
+                            prev_port = self.previous_port(tg,f)                
+                            prev_port.compute_departure_curve()
+                            
+                            print(prev_port.device().name(),'----------------',self.device().name())
+                            
+                            print(prev_port.arrival_curve().r())
+                            
+                            arrival += AffineCurve(f.burst(), f.rate()).applyDelay(prev_port.delay()) 
                                 
-                            arrival += tg.path[previous_node_index].compute_departure_curve()
                                 
-                        break        
         
             self.__arrival_computed = True
             self.__arrival_curve = arrival
             
+            
+            
+            self.__backlog = arrival.b()
+             
         return self.__arrival_curve
     
     
@@ -75,18 +86,16 @@ class Port(object):
     def compute_departure_curve(self):
         
         if not(self.__departure_computed):
-            if self.__arrival_computed:
-                # # theorem 1 calculate delay
-                self.compute_delay()
-                # theorem 2 delay the arrival curve
-                self.__departure_curve = self.__arrival_curve.applyDelay(self.__delay)
-                self.__departure_computed = True
-                return self.__departure_curve
             
-            else:
+            if not(self.__arrival_computed):
                 self.compute_arrival_curve()
-                self.compute_departure_curve()
-        
+            
+                            # # theorem 1 calculate delay
+            self.compute_delay()
+            # theorem 2 delay the arrival curve
+            
+            self.__departure_computed = True
+            
         return self.__departure_curve
     
     def neighbour_device(self):        
@@ -94,8 +103,19 @@ class Port(object):
             return self.__link.frm()
         else:
             return self.__link.to()              
-                
-
+    
+    def previous_port(self,tg,f):
+        previous_node_index = tg.path.index(self.__device)-1
+        previous_device = tg.path[previous_node_index]
+        
+        if previous_device.is_switch():
+            prts = previous_device.ports
+        else:
+            prts = [previous_device.port()]
+        for prt in prts:
+            if prt.is_from_port(tg):
+                return prt
+        
     def is_from_port(self,tg):
             neighbour = self.neighbour_device()
             if (neighbour in tg.path) and (tg.path.index(self.__device) <  tg.path.index(  neighbour  )) :    
@@ -140,3 +160,9 @@ class Port(object):
             self.__device=args[0]
         else:
             return self.__device
+    
+    def arrival_curve(self,*args):
+        if len(args)>0 :
+            self.__arrival_curve = args[0]
+        else:
+            return self.__arrival_curve
