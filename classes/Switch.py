@@ -64,3 +64,7 @@ class Switch(Node):
             self.__service_curve=args[0]
         else:
             return self.__service_curve
+    
+    def compute_curves(self):
+        for prt in self.ports:
+            prt.compute_departure_curve()
