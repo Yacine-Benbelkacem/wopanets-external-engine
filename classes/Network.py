@@ -58,3 +58,9 @@ class Network(object):
     def compute_links_load(self):
         for l in self.links:
             l.compute_load()
+    
+    def compute_curves(self):
+        for st in self.stations:
+            st.compute_curve()
+        for sw in self.switches:
+            sw.compute_curves()
