@@ -10,8 +10,8 @@ class Flow(object):
         self.__deadline = deadline
         self.__period = period
         
-        self.__rate = (payload+overhead)*8/period #bps
-        self.__burst = 2*payload - self.__rate*(period - jitter/1000.0)/1000.0 # bits
+        self.__rate = (payload+overhead)*8/(period*0.001) #bps        
+        self.__burst = 2*(payload+overhead)*8 - self.__rate*(period - jitter/1000.0)/1000.0 # bits
         
         
         self.source = source
