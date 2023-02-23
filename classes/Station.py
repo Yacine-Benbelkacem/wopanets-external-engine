@@ -35,10 +35,6 @@ class Station(Node):
             self.__link=args[0]
         else:
             return self.__link
-
-    def service_curve(self,*args):
-            # Start of user code protected zone for period function body
-        if len(args) > 0:
-            self.__service_curve=args[0]
-        else:
-            return self.__service_curve
+    
+    def compute_curve(self):
+        self.__port.compute_departure_curve()
