@@ -64,10 +64,6 @@ class Port(object):
                             prev_port = self.previous_port(tg,f)                
                             prev_port.compute_departure_curve()
                             
-                            print(prev_port.device().name(),'----------------',self.device().name())
-                            
-                            print(prev_port.arrival_curve().r())
-                            
                             arrival += AffineCurve(f.burst(), f.rate()).applyDelay(prev_port.delay()) 
                                 
                                 
