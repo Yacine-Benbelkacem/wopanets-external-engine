@@ -64,3 +64,7 @@ class Network(object):
             st.compute_curve()
         for sw in self.switches:
             sw.compute_curves()
+            
+    def compute_flows_delays(self):
+        for f in self.flows:
+            f.compute_eeds()
