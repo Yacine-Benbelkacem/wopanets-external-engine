@@ -33,9 +33,10 @@ class Link(Node):
             for t in f.targets:
                 if (self.__frm in t.path) and (self.__to in t.path):
                     if (t.path.index(self.__frm) < t.path.index(self.__to) ): 
-                        self.__direct_usage += (f.payload()+self.network.overhead())*8.0/f.period()
+                        self.__direct_usage += (f.payload()+f.overhead())/f.period()
+                        
                     else:
-                        self.__reverse_usage += (f.payload()+self.network.overhead())*8.0/f.period()
+                        self.__reverse_usage += (f.payload()+f.overhead())/f.period()
                     break
         
         # End of user code	
