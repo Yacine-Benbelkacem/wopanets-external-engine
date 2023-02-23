@@ -29,7 +29,8 @@ from __imports__ import *
 """
 def parseStations(root,network):
     for station in root.findall('station'):
-        network.stations.append (   Station(name=station.get('name'),network=network) )
+        
+        network.stations.append (   Station(name=station.get('name'),capacity=float(station.get('transmission-capacity')),network=network) )
 
 """ parseSwitches
     Method to parse switches
@@ -39,6 +40,7 @@ def parseSwitches(root,network):
     for sw in root.findall('switch'):
         network.switches.append (   Switch( name=sw.get('name'),
                                             latency=float(sw.get('tech-latency'))*1e-6,
+                                            capacity=float(sw.get('transmission-capacity')),
                                             network=network),
                                             )
 
@@ -79,6 +81,7 @@ def parseEdges(root,network):
             to.ports.append( to_port )
             to.links.append(lk)
         else:
+            to.port(to_port)
             to.link = lk
         
         network.links.append ( lk )
@@ -96,7 +99,7 @@ def parseFlows(root,network):
                      source=source,
                      payload=float(sw.get('max-payload')),
                      overhead=67,
-                     period=float(sw.get('period'))*1e-3,
+                     period=float(sw.get('period')),
                      network=network)
         
         for tg in sw.findall('target'):
@@ -220,7 +223,14 @@ afdx_network.compute_links_usage()
 afdx_network.compute_links_load()
 
 
+afdx_network.compute_curves()
 
+print(afdx_network.stations[0].port().arrival_curve().b())
+print(afdx_network.stations[0].port().arrival_curve().r())
+
+print(afdx_network.stations[2].port().delay())
+#print(afdx_network.stations[1].port().delay())
+#print(afdx_network.stations[1].capacity())
 
 #createFakeResultsFile(xmlFile,afdx_network)
 
