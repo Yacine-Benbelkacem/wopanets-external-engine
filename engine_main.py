@@ -21,7 +21,7 @@ afdx_network = Network()
 if len(sys.argv)>=2:
     xmlFile=sys.argv[1]
 else:
-    xmlFile="./ES2E_M.xml"
+    xmlFile="./inputs/ES2E_M.xml"
     
 parseNetwork(xmlFile,afdx_network)
 
