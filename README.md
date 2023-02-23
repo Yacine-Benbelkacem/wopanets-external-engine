@@ -54,6 +54,7 @@ The input units shall be as follow :
 ### Backlogs
 
 ![App Screenshot](./diagrams/backlogs_distribution.png)
+![App Screenshot](./diagrams/backlogs_vs_switches.png)
 
 
 
