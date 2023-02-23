@@ -18,4 +18,14 @@
          <path node="Dest2"/>
       </target>
    </flow>
+
+   <flow deadline="1" jitter="0" max-payload="1000" min-payload="1000" name="AFDX Flow 2" period="1" priority="Low" source="Dest2">
+      <target mode="M" name="Sender">
+         <path node="Switch"/>
+         <path node="Sender"/>
+      </target>
+   </flow>
+
+   
+
 </elements>
