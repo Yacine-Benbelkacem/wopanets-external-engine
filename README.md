@@ -46,6 +46,8 @@ The input units shall be as follow :
 ## Demo/Results
 
 
+![App Screenshot](./diagrams/backlogs_distribution.png)
+
 
 
 
