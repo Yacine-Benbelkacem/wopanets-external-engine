@@ -18,13 +18,13 @@ class AffineCurve:
         
     #----- Setters/Getters -----
     def b(self,*args):
-        if len(args>0):
+        if len(args)>0:
             self.__b=args[0]
         else:
             return self.__b
     
     def r(self,*args):
-        if len(args>0):
+        if len(args)>0:
             self.__r=args[0]
         else:
             return self.__r
