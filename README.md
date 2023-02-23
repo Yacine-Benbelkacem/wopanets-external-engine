@@ -48,6 +48,11 @@ The input units shall be as follow :
 
 ### Delays
 
+![App Screenshot](./diagrams/delays_distribution.png)
+![App Screenshot](./diagrams/delays_vs_flows.png)
+
+### Backlogs
+
 ![App Screenshot](./diagrams/backlogs_distribution.png)
 
 
