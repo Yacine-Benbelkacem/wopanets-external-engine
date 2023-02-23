@@ -4,7 +4,7 @@ class Station(Node):
                  name="",
                  kind='station',
                  service_policy="",
-                 capacity=10,
+                 capacity=100000000,
                  network=None):
         
         super().__init__(name,kind,service_policy,capacity,network)
@@ -38,3 +38,4 @@ class Station(Node):
     
     def compute_curve(self):
         self.__port.compute_departure_curve()
+        self.__port.compute_delay()
