@@ -60,6 +60,8 @@ Among of the reasons of the differences between the current engine and the WoPAN
 ![App Screenshot](./diagrams/backlogs_vs_switches.png)
 
 
+## UML class diagram
+![App Screenshot](./diagrams/uml-diagram.svg)
 
 
 ## Authors
